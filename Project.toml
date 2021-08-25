@@ -1,0 +1,13 @@
+name = "EDClust"
+uuid = "658913f3-a8b7-489e-a6c1-0d6d4dd6fb4c"
+authors = ["Xin Wei"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
