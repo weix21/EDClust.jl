@@ -1,5 +1,13 @@
 module EDClust
 
-# Write your package code here.
+using Distributions
+using SpecialFunctions
+using StatsBase
+
+include("EMPolya.jl")
+include("MMPolya.jl")
+include("fitPolya.jl")
+
+export fitPolya
 
 end
