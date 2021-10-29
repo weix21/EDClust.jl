@@ -1,4 +1,4 @@
-function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray,Y::AbstractArray,TS::AbstractArray,p::AbstractArray,L::Int64,I::AbstractArray,J::Int64,K::Int64,EMNum::Int64,MMNum::Int64,stopc::Float64=1e-4)
+function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray,Y::AbstractArray,TS::AbstractArray,p::AbstractArray,L::Int64,I::AbstractArray,J::Int64,K::Int64,EMNum::Int64,MMNum::Int64,BaseID::Int64=0,stopc::Float64=1e-4)
     mu=Array{Array{Float64}}(undef,L)
     MTS=zeros(Int64,L)
     MY=zeros(Int64,J,L)
@@ -9,10 +9,8 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
 
     #Average the initial delta
     if L>1
-        delta[:,:,2:L].=mean(delta[:,:,2:L],dims=3)
-        for l in 2:L
-            alpha[:,:,l]=alpha0+delta[:,:,l]
-        end
+        delta[:,:,1:end.!=BaseID].=mean(delta[:,:,1:end.!=BaseID],dims=3)
+        alpha=alpha0.+delta
     end
 
         @inbounds    for l in 1:L
@@ -43,10 +41,8 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
         #For the first ten EM iterations, Recalculate and average the delta
         if 2<=t1<=10
             if L>1
-                delta[:,:,2:L].=mean(delta[:,:,2:L],dims=3)
-                for l in 2:L
-                    alpha[:,:,l]=alpha0+delta[:,:,l]
-                end
+                delta[:,:,1:end.!=BaseID].=mean(delta[:,:,1:end.!=BaseID],dims=3)
+                alpha=alpha0.+delta
             end
 
             @inbounds    for l in 1:L
@@ -118,11 +114,6 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
             groups=vcat(groups,mapslices(argmax, mu[l], dims=1)[:])
         end
     end
-
-    #println("Niter=",t1)
-    #for l in 1:L
-        #println(freqtable(W[l],groups[l][1,:]))
-    #end
 
     return groups, dLikeNew, alpha0, delta, alpha, lp
 end

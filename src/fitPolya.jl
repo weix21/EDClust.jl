@@ -1,4 +1,4 @@
-function fitPolya(Count::AbstractArray,Sample::AbstractArray,InitVal::AbstractArray,EMNum::Int64=100,MMNum::Int64=5,stopc::Float64=1e-4)
+function fitPolya(Count::AbstractArray,Sample::AbstractArray,InitVal::AbstractArray,EMNum::Int64=100,MMNum::Int64=5,BaseID::Int64=0,stopc::Float64=1e-4)
     Sample=convert(Array{Int64}, Sample)
     L=length(unique(Sample))
     I=counts(Sample)
@@ -21,12 +21,12 @@ function fitPolya(Count::AbstractArray,Sample::AbstractArray,InitVal::AbstractAr
     Salpha=zeros(Float64,J,K,L)
 
     for l in 1:L
-        if l!=1
+        if l!=BaseID
             Sdelta[:,:,l].=1e-5
         end
         Salpha[:,:,l]=Salpha0+Sdelta[:,:,l]
     end
 
     Sp=1/K.*ones(K,L)
-    return EMPolya(Salpha0,Sdelta,Salpha,Y,TS,Sp,L,I,J,K,EMNum,MMNum,stopc)
+    return EMPolya(Salpha0,Sdelta,Salpha,Y,TS,Sp,L,I,J,K,EMNum,MMNum,BaseID,stopc)
 end
