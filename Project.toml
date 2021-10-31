@@ -1,7 +1,7 @@
 name = "EDClust"
 uuid = "658913f3-a8b7-489e-a6c1-0d6d4dd6fb4c"
 authors = ["Xin Wei <xwei44@emory.edu>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
