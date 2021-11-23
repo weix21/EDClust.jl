@@ -102,7 +102,7 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
         end
 
         ProgressMeter.update!(prog, abs((dLikeNew-dLike)/dLike))
-        sleep(0.1)
+        sleep(1)
 
         if(Flag==0)
             println("Niter=",t1)
