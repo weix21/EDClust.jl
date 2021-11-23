@@ -40,28 +40,28 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
     @inbounds for t1 in 1:EMNum
 
         #For the first ten EM iterations, Recalculate and average the delta
-        # if 2<=t1<=10
-        #     if L>1
-        #         delta[:,:,1:end.!=BaseID].=mean(delta[:,:,1:end.!=BaseID],dims=3)
-        #         alpha=alpha0.+delta
-        #     end
-        #
-        #     @inbounds    for l in 1:L
-        #         @inbounds    for i in 1:I[l]
-        #             @inbounds for k in 1:K
-        #                 MLike[k]=lp[k,l]+logpdf(DirichletMultinomial(TS[l][i],alpha[:,k,l]),view(Y[l],:,i))
-        #             end
-        #             m=maximum(MLike)
-        #             @inbounds for k in 1:K
-        #                 Newmu[l][k,i]=MLike[k]-m-log(sum(exp.(MLike[:].-m)))
-        #             end
-        #             dLike+=m+log(sum(exp.(MLike[:].-m)))
-        #
-        #     end
-        #
-        #     end
-        #
-        # end
+        if 2<=t1<=10
+            if L>1
+                delta[:,:,1:end.!=BaseID].=mean(delta[:,:,1:end.!=BaseID],dims=3)
+                alpha=alpha0.+delta
+            end
+
+            @inbounds    for l in 1:L
+                @inbounds    for i in 1:I[l]
+                    @inbounds for k in 1:K
+                        MLike[k]=lp[k,l]+logpdf(DirichletMultinomial(TS[l][i],alpha[:,k,l]),view(Y[l],:,i))
+                    end
+                    m=maximum(MLike)
+                    @inbounds for k in 1:K
+                        Newmu[l][k,i]=MLike[k]-m-log(sum(exp.(MLike[:].-m)))
+                    end
+                    dLike+=m+log(sum(exp.(MLike[:].-m)))
+
+            end
+
+            end
+
+        end
 
         #MM step
         alpha0, delta, alpha=MMPolya(alpha0,delta,alpha,Y,TS,MY,MTS,Newmu,L,I,J,K,MMNum)
