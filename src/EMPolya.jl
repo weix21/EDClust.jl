@@ -94,8 +94,6 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
                 lp=copy(Newlp)
             else
                 Flag=0
-                # println(dLike)
-                # println(dLikeNew)
             end
         else
             Flag=0
@@ -105,7 +103,6 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
         end
 
         if(Flag==0)
-            # println("Niter=",t1)
             break
         end
 
