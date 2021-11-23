@@ -1,4 +1,4 @@
-function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray,Y::AbstractArray,TS::AbstractArray,p::AbstractArray,L::Int64,I::AbstractArray,J::Int64,K::Int64,EMNum::Int64,MMNum::Int64,stopc::Float64=1e-4)
+function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray,Y::AbstractArray,TS::AbstractArray,p::AbstractArray,L::Int64,I::AbstractArray,J::Int64,K::Int64,EMNum::Int64,MMNum::Int64,BaseID::Int64=0,stopc::Float64=1e-4)
     mu=Array{Array{Float64}}(undef,L)
     MTS=zeros(Int64,L)
     MY=zeros(Int64,J,L)
