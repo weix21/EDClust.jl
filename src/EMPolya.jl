@@ -6,7 +6,7 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
     dLikeNew=0
     MLike=zeros(Float64,K)
     lp=log.(p)
-    prog = ProgressThresh(stopc, "Thresh:")
+    prog = ProgressThresh(stopc, "Criterion:")
 
     #Average the initial delta
     if L>1
@@ -85,7 +85,7 @@ function EMPolya(alpha0::AbstractArray,delta::AbstractArray,alpha::AbstractArray
 
         #Stop criteria
         ProgressMeter.update!(prog, abs((dLikeNew-dLike)/dLike))
-        sleep(1)
+        sleep(0.5)
 
         if dLikeNew>dLike
             if abs((dLikeNew-dLike)/dLike)> stopc
